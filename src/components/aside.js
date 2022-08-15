@@ -1,106 +1,22 @@
-//import { useState } from "react";
-
 import { useState } from "react";
 
-//const initialValues = {
-//  larguraArea: 0,
-//  alturaArea: 0,
-//  larguraRevestimento: 0,
-//  alturaRevestimento: 0,
-//  posição: 0,
-//  resultado: '',
-//  }
 
-
-const Aside = (props) => {
-	//const largura = document.getElementsByName('larguraArea');
-	//const altura = document.getElementsByName('alturaArea');
-	//const ceramicaLargura = document.getElementsByName('larguraRevestimento')
-	//
-	//const ceramicaAltura = document.getElementsByName('alturaRevestimento')
+const Aside = () => {
 
   // utilizando o estado para guardar o value e manipular
 
+  
+  
   // no formulário
-  const [altura, setAltura] = useState("");
-  const [ceramicaLargura, setCeramicaLargura] = useState("");
-  const [ceramicaAltura, setCeramicaAltura] = useState("");
-  const [posicaoCeramica, setPosicaoCeramica] = useState("");
-  
-  
   // pegando o input e usando o estado pra manipular 
   const [largura, setLargura] = useState('')
-const pegaLargura = evento => {
-  //setLargura(evento.target.value);
-  props.aoAlterado(evento.target.value)
-  console.log(largura);
-};
-  
-  // ouvindo a submissão do formulário e guardando o valor pra usar na função
+  const [altura, setAltura] = useState("");
+  const [ceramicaLargura, setCeramicaLargura] = useState("");
+	
+  const [ceramicaAltura, setCeramicaAltura] = useState("");
+  const [posicaoCeramica, setPosicaoCeramica] = useState("");
 
-const [resultados, setResultados] = useState([]);
-const aoNovoResultado = resultado => {
-  console.log(resultado);
-  setResultados([...resultados, resultado])
-};
-
-
-
-	// pegando o valor do input
-	//let largura;
-	//let altura;
-	//let ceramicaLargura;
-
-	//let ceramicaAltura;
-
-	//let posicaoCeramica;
-
-
-	const pegaAltura = evento => {
-		altura = evento.target.value;
-		console.log(altura);
-	};
-
-	const pegaCeramicaLargura = evento => {
-		ceramicaLargura = evento.target.value;
-		console.log(ceramicaLargura);
-	};
-
-	const pegaCeramicaAltura = evento => {
-		ceramicaAltura = evento.target.value;
-		console.log(ceramicaAltura);
-	};
-
-	const pegaPosicaoCeramica = evento => {
-    posicaoCeramica = evento.target.value;
-    
-
-    console.log(posicaoCeramica);
-    calcTipo(posicaoCeramica);
-	};
-
-	//const posicaoRevestimento = document.getElementsByName('posição')
-	//
-	//  const [valor, setValor] = useState(initialValues)
-	//
-	//  function onChange(ev) {
-	//    const value = ev.target.value;
-	//    console.log(value);
-	//  }
-
-	//const larguraAreaReact = e => {
-	//  console.log(e);
-	//
-	//}
-	//const [final, setFinal] = useState(0)
-	//useEffect(() => {document.title = `mudou ${final} vezes`})
-	//useState(
-	//  setResultado =  calc(posicaoRevestimento.value)
-	//)
-
-	//const botao = document.querySelector('.submit__button')
-
-	//var resultado = "";
+	var resultado='';
 
 	var cmCeramicaLargura = ceramicaLargura / 100;
 	var cmCeramicaAltura = ceramicaAltura / 100;
@@ -213,6 +129,7 @@ const aoNovoResultado = resultado => {
 			)} peças.`;
 			//setFinal(final => final + resultado)
 			console.log("funcionou");
+			console.log("resultado função:" + resultado);
 
 			return resultado;
 		} else if (quantosTrinchosMetadeTotais === 0) {
@@ -272,10 +189,11 @@ const aoNovoResultado = resultado => {
 			//setFinal(final => final + resultado)
 			console.log("funcionou");
 
+			console.log('resultado função:' + resultado);
 			return resultado;
 		}
 	}
-	console.log(resultado);
+	
 
 	function calcTipo(posicaoCeramica) {
 		if (posicaoCeramica === 1) {
@@ -285,29 +203,25 @@ const aoNovoResultado = resultado => {
 		if (posicaoCeramica === 2) {
 			calcCeramicaPosicao(cmCeramicaAltura, cmCeramicaLargura);
 		}
+
 	}
 
-	//calcTipo();
+
 
 	//fazendo o formulario escutar o evento para quando submeter ele guardar os dados
-	const aoSalvar = evento => {
-    evento.preventDefault();
-    props.aoNovoResultado(resultado)
+	const aoSalvar = event => {
+		event.preventDefault();
 
 		calcTipo(posicaoCeramica);
-		console.log("Form Submetido" + largura);
+		calcCeramicaPosicao(cmCeramicaAltura, cmCeramicaLargura);
+		console.log(resultado);
+
 	};
 
 	return (
 		<>
 			<h2>Faça o cálculo do piso para seu projeto</h2>
-			<form
-				name="form"
-				action=""
-				className="form__submit"
-				method="post"
-				onSubmit={aoSalvar}
-			>
+			<form name="form" className="form__submit" onSubmit={aoSalvar}>
 				<label htmlFor="larguraArea">
 					Qual é a largura (em metros) da área que você quer cobrir? <br></br>
 					(considere a área na vertical com a largura sendo o menor lado)
@@ -318,8 +232,8 @@ const aoNovoResultado = resultado => {
 					placeholder="ex.: 1,20"
 					aria-label="digite a largura da área (em metros)"
 					className="from__input"
-					value={largura}
-					aoAlterado={largura => setLargura(largura)}
+					onChange={event => setLargura(event.target.value)}
+					//aoAlterado={largura => setLargura(largura)}
 				/>
 				<label htmlFor="alturaArea">
 					Qual é a altura (em metros) da área que você quer cobrir? <br></br>
@@ -331,8 +245,7 @@ const aoNovoResultado = resultado => {
 					placeholder="ex.: 2,55"
 					aria-label="digite a altura da área (em metros)"
 					className="form__input"
-					value={altura}
-					onChange={pegaAltura}
+					onChange={event => setAltura(event.target.value)}
 				/>
 				<label htmlFor="larguraCeramica">
 					De quantos centímetros é a largura do revestimento que você quer usar?
@@ -345,8 +258,7 @@ const aoNovoResultado = resultado => {
 					placeholder="ex.: 60"
 					aria-label="digite a largura do Revestimento (em centímetros)"
 					className="form__input"
-					value={ceramicaLargura}
-					onChange={pegaCeramicaLargura}
+					onChange={event => setCeramicaLargura(event.target.value)}
 				/>
 				<label htmlFor="alturaRevestimento">
 					De quantos centímetros é a altura do revestimento que você quer usar?
@@ -359,8 +271,7 @@ const aoNovoResultado = resultado => {
 					placeholder="ex.: 120"
 					aria-label="digite a altura do Revestimento (em centímetros)"
 					className="form__input"
-					value={ceramicaAltura}
-					onChange={pegaCeramicaAltura}
+					onChange={event => setCeramicaAltura(event.target.value)}
 				/>
 				<label htmlFor="posição">
 					O revestimento será posicionado na vertical ou na horizontal?{" "}
@@ -375,25 +286,21 @@ const aoNovoResultado = resultado => {
 					placeholder="ex.: 1"
 					aria-label="digite apenas o número correspondente"
 					className="form__input"
-					value={posicaoCeramica}
-					onChange={pegaPosicaoCeramica}
+					onChange={event => setPosicaoCeramica(event.target.value)}
 				/>
 
-				<button
-					type="submit"
-					className="submit__button"
-					value="Calcular"
-					onClick={aoSalvar}
-				>
+				<button type="submit" className="submit__button" value="Calcular">
 					Calcular
 				</button>
 
-				<div
-					htmlFor="resultado"
-					aoResultado={resultado => aoNovoResultado(resultado)}
-				>
-					{" "}
-					Resultado:{" "}
+				<div htmlFor="resultado">
+					Resultado: {resultado}	<br></br>
+					largura: {largura} <br></br>
+					Altura: {altura} <br></br>
+					ceramicaLargura: {ceramicaLargura} <br></br>
+					ceramicaAltura: {ceramicaAltura} <br></br>
+					posicaoCeramica: {posicaoCeramica}
+					<br></br>
 				</div>
 			</form>
 		</>
