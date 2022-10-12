@@ -209,7 +209,6 @@ const Aside = () => {
 			calcCeramicaPosicao(cmCeramicaAltura, cmCeramicaLargura);
 		}
 		
-		console.log(resultado);
 	};
 	
 	return (
